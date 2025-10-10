@@ -1,6 +1,6 @@
 {{ define "main" }}
-<div style="margin-left: 50px; margin-right: 40px; background: #fff; color: #333; min-height: 500px; padding: 40px 20px 40px 20px; margin-top: 60px;">
-  <div style="max-width: 980px; margin-left: 20px;">
+<div class="faq-main-container" style="background: #fff; color: #333; min-height: 500px;">
+  <div class="faq-content" style="max-width: 980px;">
     <div>
       {{- range .Params.faqs -}}
       <div style="margin-bottom: 30px; padding: 25px; background: #f9f9f9; border-radius: 12px; border: 1px solid #e0e0e0;">
@@ -13,4 +13,30 @@
     </div>
   </div>
 </div>
+
+
+<style>
+  /* Mobile-first: natural flow with padding */
+  .faq-main-container {
+    padding: 0 16px 40px 16px;
+  }
+  
+  .faq-content {
+    margin: 0 auto;
+  }
+  
+  /* Desktop: positioned layout */
+  @media (min-width: 550px) {
+    .faq-main-container {
+      margin-left: 50px;
+      margin-right: 40px;
+      margin-top: 20px;
+      padding: 40px 20px;
+    }
+    
+    .faq-content {
+      margin-left: 20px;
+    }
+  }
+</style>
 {{ end }}
