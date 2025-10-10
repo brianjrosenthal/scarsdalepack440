@@ -1,6 +1,6 @@
 :root{
-  --green:#2e7d32;
-  --green-dark:#225d26;
+  --green:#3E6947;
+  --green-dark:#2d4f35;
   --text:#111;
   --muted:#555;
   --bg:#fff;
@@ -15,15 +15,15 @@ a:hover{text-decoration:underline}
 
 /* Header */
 .site-header{background:var(--green);color:#fff;position:sticky;top:0;z-index:50}
-.header-inner{display:flex;align-items:center;gap:16px;min-height:64px}
+.header-inner{display:flex;align-items:center;gap:16px;min-height:64px; padding: 50px 16px 0 16px; }
 .brand{display:flex;align-items:center;gap:12px}
 .logo{height:44px;width:auto;display:block}
 .logo-text{font-weight:700;font-size:20px;color:#fff}
 
 /* Menu */
-.nav{margin-left:auto}
-.menu{list-style:none;margin:0;padding:0;display:flex;gap:12px}
-.menu-item>a{display:block;padding:12px 10px;color:#fff;border-radius:6px}
+.nav{margin-left:320px; text-align:right; flex-grow:1; padding-top: 37px;}
+.menu{list-style:none;margin:0;padding:0;display:flex;gap:4px;justify-content:flex-end;}
+.menu-item>a{display:block;padding:12px 8px;color:#fff;border-radius:6px}
 .menu-item.is-active>a{background:rgba(255,255,255,.16)}
 .menu-item.has-children{position:relative}
 .submenu{
@@ -35,6 +35,9 @@ a:hover{text-decoration:underline}
 .submenu-item>a{display:block;padding:8px 12px;color:var(--text)}
 .submenu-item>a:hover{background:#f5f5f5}
 
+/* Hamburger menu button - hidden on desktop */
+.menu-toggle{display:none;}
+
 /* Content area */
 #content.container{padding:24px 16px}
 .content h1{margin:0 0 12px 0;font-size:30px}
@@ -45,32 +48,188 @@ a:hover{text-decoration:underline}
 .footer-inner{display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:56px}
 .footer-email{color:#fff;font-weight:600}
 
-/* Small screens */
-@media (max-width: 800px){
-  .menu{flex-wrap:wrap}
-  .submenu{position:static;box-shadow:none;border:none;border-radius:0;padding:0}
-  .submenu-item>a{padding:8px 10px}
+/* Mobile screens */
+@media (max-width: 549px){
+  /* Show hamburger menu button */
+  .menu-toggle{
+    display:block;
+    position:absolute;
+    top:20px;
+    right:16px;
+    background:none;
+    border:none;
+    color:#fff;
+    font-size:28px;
+    cursor:pointer;
+    padding:8px;
+    z-index:101;
+  }
+  
+  /* Hide desktop menu positioning */
+  .nav{margin-left:0; width:100%;}
+  
+  /* Mobile menu - hidden by default */
+  .menu{
+    display:none;
+    flex-direction:column;
+    position:absolute;
+    top:70px;
+    left:0;
+    right:0;
+    background:var(--green);
+    padding:8px 16px;
+    box-shadow:0 4px 6px rgba(0,0,0,.1);
+  }
+  
+  /* Show menu when active */
+  .menu.active{display:flex;}
+  
+  .menu-item>a{padding:12px 8px;}
+  
+  /* Submenu styling for mobile */
+  .submenu{
+    position:static;
+    box-shadow:none;
+    border:none;
+    border-radius:0;
+    padding:0 0 0 16px;
+    background:transparent;
+  }
+  .submenu-item>a{padding:8px;color:#fff;}
+  .submenu-item>a:hover{background:rgba(255,255,255,.16);}
 }
 /* Overhanging logo treatment */
-.site-header{ overflow: visible; }
-.header-inner{ align-items: center; min-height: 84px; }
-.brand-wrap{ display: inline-block; position: relative; z-index: 2; }
+.site-header{ overflow: visible; position: relative; }
+.header-inner{ align-items: center; min-height: 150px; }
+
+/* Position logo absolutely so it doesn't affect header height */
+.brand{ 
+  position: absolute;
+  top: 0;
+  left: 16px;
+  z-index: 100;
+}
+
+.brand-wrap{ display: inline-block; position: relative; }
 
 /* Make the logo larger and pull it below the green bar */
 .logo{
-  height: 88px;               /* adjust size as desired (e.g., 96px) */
-  width: auto;
+  width: 297px;               /* custom size as requested */
+  height: auto;
   display: block;
-  margin-bottom: -18px;       /* negative margin creates the overhang */
   filter: drop-shadow(0 2px 4px rgba(0,0,0,.15)); /* subtle lift */
 }
 
 /* Give a bit more breathing room under the header so content isn't cramped */
-#content.container{ padding-top: 36px; }
+#content.container{ padding-top: 110px; }
 
-/* Mobile: reduce the overhang so it doesn't crowd the text */
-@media (max-width: 800px){
-  .logo{ height: 72px; margin-bottom: -10px; }
-  #content.container{ padding-top: 28px; }
+/* Mobile: reduce logo and header size */
+@media (max-width: 549px){
+  .logo{ width: 200px; }
+  .header-inner{ min-height: 70px; }
+  #content.container{ padding-top: 80px; }
 }
 
+/* Contact Page Styling */
+.contact-page-full{
+  background: var(--green);
+  color: #fff;
+  min-height: 500px;
+  padding: 40px 16px 80px 16px;
+}
+
+.contact-wrapper{
+  max-width: 980px;
+  margin-left: 320px; /* Start content underneath logo */
+}
+
+.contact-header{
+  margin-bottom: 30px;
+}
+
+.contact-title{
+  color: #fff;
+  font-size: 36px;
+  margin: 0 0 20px 0;
+  font-weight: 700;
+}
+
+.contact-content{
+  background: var(--green);
+  padding: 0;
+}
+
+.contact-person{
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 40px;
+  padding: 20px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 12px;
+}
+
+.contact-photo{
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 6px solid #fff;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.contact-info h3{
+  color: #fff;
+  font-size: 24px;
+  margin: 0 0 10px 0;
+  font-weight: 600;
+}
+
+.contact-info p{
+  color: #fff;
+  margin: 5px 0;
+  font-size: 18px;
+}
+
+.contact-info a{
+  color: #fff;
+  text-decoration: underline;
+}
+
+.contact-info a:hover{
+  color: #e0e0e0;
+}
+
+/* Mobile contact page */
+@media (max-width: 549px){
+  .contact-page-full{
+    padding: 40px 16px;
+  }
+  
+  .contact-wrapper{
+    margin-left: 0;
+  }
+  
+  .contact-person{
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+  
+  .contact-photo{
+    width: 120px;
+    height: 120px;
+  }
+  
+  .contact-title{
+    font-size: 28px;
+  }
+  
+  .contact-info h3{
+    font-size: 20px;
+  }
+  
+  .contact-info p{
+    font-size: 16px;
+  }
+}

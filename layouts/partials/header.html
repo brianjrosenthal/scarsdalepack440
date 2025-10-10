@@ -11,7 +11,10 @@
     </a>
 
     <nav class="nav" aria-label="Main">
-      <ul class="menu">
+      <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span>☰</span>
+      </button>
+      <ul class="menu" id="main-menu">
         {{- $current := . -}}
         {{- range site.Menus.main -}}
           <li class="menu-item {{ if .HasChildren }}has-children{{ end }} {{ if or ($current.IsMenuCurrent "main" .) ($current.HasMenuCurrent "main" .) }}is-active{{ end }}">
@@ -32,3 +35,27 @@
   </div>
 </header>
 
+<script>
+  // Toggle mobile menu
+  document.addEventListener('DOMContentLoaded', function() {
+    const menuToggle = document.querySelector('.menu-toggle');
+    const menu = document.getElementById('main-menu');
+    
+    if (menuToggle && menu) {
+      menuToggle.addEventListener('click', function() {
+        const isActive = menu.classList.contains('active');
+        menu.classList.toggle('active');
+        menuToggle.setAttribute('aria-expanded', !isActive);
+      });
+      
+      // Close menu when clicking outside
+      document.addEventListener('click', function(event) {
+        const isClickInsideNav = event.target.closest('.nav');
+        if (!isClickInsideNav && menu.classList.contains('active')) {
+          menu.classList.remove('active');
+          menuToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+  });
+</script>
