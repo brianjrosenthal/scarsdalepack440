@@ -1,0 +1,16 @@
+{{ define "main" }}
+<div style="margin-left: 50px; margin-right: 40px; background: #fff; color: #333; min-height: 500px; padding: 40px 20px 40px 20px; margin-top: 60px;">
+  <div style="max-width: 980px; margin-left: 20px;">
+    <div>
+      {{- range .Params.faqs -}}
+      <div style="margin-bottom: 30px; padding: 25px; background: #f9f9f9; border-radius: 12px; border: 1px solid #e0e0e0;">
+        <h3 style="color: #3E6947; font-size: 22px; margin: 0 0 12px 0; font-weight: 600;">{{ .question }}</h3>
+        <div style="color: #333; line-height: 1.8; font-size: 16px;">
+          {{ .answer | markdownify }}
+        </div>
+      </div>
+      {{- end -}}
+    </div>
+  </div>
+</div>
+{{ end }}

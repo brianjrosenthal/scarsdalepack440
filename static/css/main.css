@@ -125,7 +125,7 @@ a:hover{text-decoration:underline}
 
 /* Mobile: reduce logo and header size */
 @media (max-width: 549px){
-  .logo{ width: 200px; }
+  .logo{ width: 100px; }
   .header-inner{ min-height: 70px; }
   #content.container{ padding-top: 80px; }
 }
