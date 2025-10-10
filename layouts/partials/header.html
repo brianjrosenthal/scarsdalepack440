@@ -1,0 +1,34 @@
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="{{ "/" | relURL }}">
+      <span class="brand-wrap">
+        {{- with site.Params.logo -}}
+          <img src="{{ . | relURL }}" alt="{{ site.Title }}" class="logo" />
+        {{- else -}}
+          <span class="logo-text">{{ site.Title }}</span>
+        {{- end -}}
+      </span>
+    </a>
+
+    <nav class="nav" aria-label="Main">
+      <ul class="menu">
+        {{- $current := . -}}
+        {{- range site.Menus.main -}}
+          <li class="menu-item {{ if .HasChildren }}has-children{{ end }} {{ if or ($current.IsMenuCurrent "main" .) ($current.HasMenuCurrent "main" .) }}is-active{{ end }}">
+            <a href="{{ .URL | relURL }}">{{ .Name }}</a>
+            {{- if .HasChildren -}}
+              <ul class="submenu">
+                {{- range .Children -}}
+                  <li class="submenu-item {{ if or ($current.IsMenuCurrent "main" .) ($current.HasMenuCurrent "main" .) }}is-active{{ end }}">
+                    <a href="{{ .URL | relURL }}">{{ .Name }}</a>
+                  </li>
+                {{- end -}}
+              </ul>
+            {{- end -}}
+          </li>
+        {{- end -}}
+      </ul>
+    </nav>
+  </div>
+</header>
+

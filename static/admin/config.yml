@@ -1,0 +1,59 @@
+backend:
+  name: github
+  repo: brianjrosenthal/scarsdalepack440
+  branch: master
+  base_url: https://auth.scarsdalepack440.org      # your OAuth proxy (section C)
+  auth_endpoint: /authorize.php
+  cms_label_prefix: "[CMS]"                         # optional: prefix commit messages
+
+media_folder: "static/uploads"      # where files are stored in the repo
+public_folder: "/uploads"           # how they’re referenced on the site
+
+# Use direct-publish to master for now (simple). Switch to editorial_workflow later if you want PR review.
+publish_mode: simple
+
+# Collections define what editors can edit
+collections:
+  - name: "pages"
+    label: "Pages"
+    folder: "content/pages"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  # Expose homepage too (optional)
+  - name: "homepage"
+    label: "Homepage"
+    files:
+      - name: "home"
+        label: "Home Content"
+        file: "content/_index.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Body", name: "body", widget: "markdown" }
+
+  # If you adopt the data/menus.yml pattern later, you can add a GUI here
+  # - name: "navigation"
+  #   label: "Navigation"
+  #   files:
+  #     - name: "menus"
+  #       label: "Main Menu"
+  #       file: "data/menus.yml"
+  #       fields:
+  #         - label: "Main"
+  #           name: "main"
+  #           widget: "list"
+  #           fields:
+  #             - { label: "Name", name: "name", widget: "string" }
+  #             - { label: "URL", name: "url", widget: "string" }
+  #             - { label: "Weight", name: "weight", widget: "number", value_type: "int" }
+  #             - label: "Children"
+  #               name: "children"
+  #               widget: "list"
+  #               fields:
+  #                 - { label: "Name", name: "name", widget: "string" }
+  #                 - { label: "URL", name: "url", widget: "string" }
+  #                 - { label: "Weight", name: "weight", widget: "number", value_type: "int" }
+

@@ -1,3 +1,54 @@
 baseURL = "https://www.scarsdalepack440.org/"
 languageCode = "en-us"
 title = "Scarsdale Pack 440"
+
+[params]
+  logo = "/uploads/logo.png"
+
+[menu]
+  [[menu.main]]
+    name = "Home"
+    url = "/"
+    weight = 1
+  [[menu.main]]
+    name = "Join"
+    url = "/join/"
+    weight = 2
+  [[menu.main]]
+    name = "Calendar"
+    url = "/calendar/"
+    weight = 3
+  [[menu.main]]
+    name = "Activities"
+    url = "/activities/"
+    weight = 4
+  [[menu.main]]
+    name = "Camping Info"
+    url = "/activities/camping-info/"
+    parent = "Activities"
+    weight = 41
+  [[menu.main]]
+    name = "Volunteer"
+    url = "/volunteer/"
+    weight = 5
+  [[menu.main]]
+    name = "Forms"
+    url = "/forms/"
+    weight = 6
+  [[menu.main]]
+    name = "Uniforms"
+    url = "/uniforms/"
+    weight = 7
+  [[menu.main]]
+    name = "FAQ"
+    url = "/faq/"
+    weight = 8
+  [[menu.main]]
+    name = "Donate"
+    url = "/donate/"
+    weight = 9
+  [[menu.main]]
+    name = "Contact"
+    url = "/contact/"
+    weight = 10
+
