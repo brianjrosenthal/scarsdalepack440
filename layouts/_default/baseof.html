@@ -1,0 +1,9 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{ block "title" . }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
+<link rel="stylesheet" href="/css/site.css">
+</head><body>
+<header><a href="/">{{ .Site.Title }}</a> | <a href="/pages/hello-world/">Hello</a></header>
+<main>{{ block "main" . }}{{ .Content }}{{ end }}</main>
+<footer><p>&copy; {{ now.Year }} {{ .Site.Title }}</p></footer>
+</body></html>
