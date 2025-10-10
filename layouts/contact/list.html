@@ -2,26 +2,22 @@
 <div style="margin-left: 50px; margin-right: 40px; background: #3E6947; color: #fff; min-height: 500px; padding: 40px 20px 40px 20px; margin-top: 60px;">
   <div style="max-width: 980px;">
     <div>
+      {{- with .Params.intro_text -}}
       <div style="display: flex; align-items: center; gap: 30px; margin-bottom: 40px; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 12px;">
-          <p style="color: #fff; margin: 5px 0; font-size: 18px;">To contact Cub Scout Pack 440, email scarsdalecubs@gmail.com or reach out to any of the leaders below.</p>
+        <p style="color: #fff; margin: 5px 0; font-size: 18px;">{{ . }}</p>
       </div>
+      {{- end -}}
+      
+      {{- range .Params.contacts -}}
       <div style="display: flex; align-items: center; gap: 30px; margin-bottom: 40px; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 12px;">
-        <img src="/uploads/brian.png" alt="Brian Rosenthal" style="width: 150px; height: 150px; border-radius: 50%; border: 6px solid #fff; object-fit: cover; flex-shrink: 0;">
+        <img src="{{ .photo }}" alt="{{ .name }}" style="width: 150px; height: 150px; border-radius: 50%; border: 6px solid #fff; object-fit: cover; flex-shrink: 0;">
         <div>
-          <h3 style="color: #fff; font-size: 24px; margin: 0 0 10px 0; font-weight: 600;">Cubmaster Brian Rosenthal</h3>
-          <p style="color: #fff; margin: 5px 0; font-size: 18px;">914-463-7278</p>
-          <p style="color: #fff; margin: 5px 0; font-size: 18px;"><a href="mailto:brian.rosenthal@gmail.com" style="color: #fff; text-decoration: underline;">brian.rosenthal@gmail.com</a></p>
+          <h3 style="color: #fff; font-size: 24px; margin: 0 0 10px 0; font-weight: 600;">{{ .name }}</h3>
+          <p style="color: #fff; margin: 5px 0; font-size: 18px;">{{ .phone }}</p>
+          <p style="color: #fff; margin: 5px 0; font-size: 18px;"><a href="mailto:{{ .email }}" style="color: #fff; text-decoration: underline;">{{ .email }}</a></p>
         </div>
       </div>
-
-      <div style="display: flex; align-items: center; gap: 30px; margin-bottom: 10px; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 12px;">
-        <img src="/uploads/takford.png" alt="Takford Mau" style="width: 150px; height: 150px; border-radius: 50%; border: 6px solid #fff; object-fit: cover; flex-shrink: 0;">
-        <div>
-          <h3 style="color: #fff; font-size: 24px; margin: 0 0 10px 0; font-weight: 600;">Committee Chair Takford Mau</h3>
-          <p style="color: #fff; margin: 5px 0; font-size: 18px;">646-331-3857</p>
-          <p style="color: #fff; margin: 5px 0; font-size: 18px;"><a href="mailto:takfordmau@gmail.com" style="color: #fff; text-decoration: underline;">takfordmau@gmail.com</a></p>
-        </div>
-      </div>
+      {{- end -}}
     </div>
   </div>
 </div>

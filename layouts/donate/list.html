@@ -1,0 +1,65 @@
+{{ define "main" }}
+<!-- Background image container -->
+<div style="position: relative; margin-left: 50px; margin-right: 50px; margin-top: -120px; padding-top: 150px; min-height: 700px;">
+  <!-- Background image with opacity -->
+  <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url('/uploads/donate-background.jpg'); background-size: cover; background-position: center; opacity: 0.4; z-index: 0; border-radius: 8px;"></div>
+  
+  <!-- Main content area (656px centered) -->
+  <div style="position: relative; z-index: 1; max-width: 656px; margin: 0 auto; padding: 40px 20px 60px;">
+    <h1 style="font-size: 36px; font-weight: 700; margin: 0 0 30px 0; text-align: center; color: #000;">{{ .Title }}</h1>
+    
+    <div style="background: rgba(255, 255, 255, 0.95); padding: 30px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+      <div style="line-height: 1.8; color: #333;">
+        {{ .Params.intro_text | markdownify }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Payment Options Section with Green Border -->
+<div style="background: #3E6947; padding: 40px 60px; margin-top: 60px;">
+  <div style="background: #fff; padding: 40px 20px;">
+    <h2 style="font-size: 32px; font-weight: 700; margin: 0 0 30px 0; text-align: center;">Payment Options</h2>
+    
+    <!-- Payment Method Cards -->
+    <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; max-width: 1100px; margin: 0 auto;">
+      {{- range .Params.payment_methods -}}
+      <div style="width: 336px; border: 1px solid #e0e0e0; border-radius: 8px; padding: 24px; background: #f9f9f9;">
+        <h3 style="font-size: 24px; font-weight: 600; margin: 0 0 16px 0; color: #3E6947;">{{ .title }}</h3>
+        <ul style="margin: 0; padding-left: 20px; line-height: 1.8;">
+          {{- range .items -}}
+          <li style="margin-bottom: 8px;">{{ . | markdownify }}</li>
+          {{- end -}}
+        </ul>
+      </div>
+      {{- end -}}
+    </div>
+  </div>
+</div>
+
+<style>
+  @media (max-width: 549px) {
+    /* Mobile adjustments */
+    #content.container {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+    
+    /* Adjust background container for mobile */
+    div[style*="margin-left: 50px"] {
+      margin-left: 16px !important;
+      margin-right: 16px !important;
+    }
+    
+    /* Adjust main content for mobile */
+    div[style*="max-width: 656px"] {
+      padding: 20px 16px !important;
+    }
+    
+    /* Stack payment cards on mobile */
+    div[style*="width: 336px"] {
+      width: 100% !important;
+    }
+  }
+</style>
+{{ end }}
