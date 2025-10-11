@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>{{ .Site.Title }}</title>
+<link rel="stylesheet" href="/css/main.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@400;600&display=swap" rel="stylesheet">
+<meta name="description" content="Pack 440 - Scarsdale Cub Scouts" />
+</head>
+<body class="homepage">
+  {{ partial "header.html" . }}
+
+  <!-- Section 1: Hero with Background Image -->
+  <section class="hero-section">
+    <div class="hero-overlay">
+      <h1 class="hero-title">{{ .Params.hero_title }}</h1>
+      <a href="/join/" class="hero-button">Join</a>
+    </div>
+  </section>
+
+  <!-- Section 2: Green Intro Text -->
+  <section class="intro-section">
+    <div class="intro-content">
+      <p class="intro-text-large">{{ .Params.intro_text_1 }}</p>
+      <p class="intro-text-small">{{ .Params.intro_text_2 }}</p>
+    </div>
+  </section>
+
+  <!-- Section 3: Activities -->
+  <section class="activities-section">
+    <div class="activities-overlay">
+      <h2 class="activities-title">{{ .Params.activities_title }}</h2>
+      <p class="activities-subtitle">{{ .Params.activities_subtitle }}</p>
+      <div class="activities-grid">
+        {{- range .Params.activities -}}
+        <div class="activity-item">
+          <img src="{{ .image }}" alt="{{ .name }}" class="activity-icon">
+          <p class="activity-name">{{ .name }}</p>
+        </div>
+        {{- end -}}
+      </div>
+      <a target="_blank" href="https://my.scarsdalepack440.org/public_calendar.php" class="activities-button">Learn More</a>
+    </div>
+  </section>
+
+  <!-- Section 4: Photo Gallery -->
+  <section class="gallery-section">
+    <h2 class="gallery-title">Scout Life Gallery</h2>
+</section>
+<section class="gallery-section-photos">
+    <div class="gallery-grid">
+      {{ range seq 1 12 }}
+      <img src="/uploads/homepage_photos/{{ . }}.jpg" alt="Scout activity {{ . }}" class="gallery-photo">
+      {{ end }}
+    </div>
+  </section>
+
+  <!-- Section 5: Testimonials Carousel -->
+  <section class="testimonials-section">
+    <div class="testimonials-container">
+      <button class="carousel-arrow carousel-prev" onclick="changeSlide(-1)">&#10094;</button>
+      <div class="testimonials-slider">
+        {{- range $index, $testimonial := .Params.testimonials -}}
+        <div class="testimonial-slide {{ if eq $index 0 }}active{{ end }}">
+          <p class="testimonial-quote">"{{ $testimonial.quote }}"</p>
+          <p class="testimonial-person">{{ $testimonial.person }}</p>
+        </div>
+        {{- end -}}
+      </div>
+      <button class="carousel-arrow carousel-next" onclick="changeSlide(1)">&#10095;</button>
+    </div>
+    <div class="carousel-dots">
+      {{- range $index, $testimonial := .Params.testimonials -}}
+      <span class="dot {{ if eq $index 0 }}active{{ end }}" onclick="goToSlide({{ $index }})"></span>
+      {{- end -}}
+    </div>
+  </section>
+
+  <!-- Section 6: Final CTA -->
+  <section class="final-cta-section">
+    <div class="cta-overlay">
+      <h2 class="cta-title">Ready for Cub Scouts?</h2>
+      <a href="/join/" class="cta-button">Join</a>
+    </div>
+  </section>
+
+  {{ partial "footer.html" . }}
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.testimonial-slide');
+    const dots = document.querySelectorAll('.dot');
+    let autoSlideInterval;
+
+    function showSlide(n) {
+      slides.forEach(slide => slide.classList.remove('active'));
+      dots.forEach(dot => dot.classList.remove('active'));
+      
+      currentSlide = (n + slides.length) % slides.length;
+      
+      slides[currentSlide].classList.add('active');
+      dots[currentSlide].classList.add('active');
+    }
+
+    function changeSlide(direction) {
+      showSlide(currentSlide + direction);
+      resetAutoSlide();
+    }
+
+    function goToSlide(n) {
+      showSlide(n);
+      resetAutoSlide();
+    }
+
+    function resetAutoSlide() {
+      clearInterval(autoSlideInterval);
+      autoSlideInterval = setInterval(() => {
+        showSlide(currentSlide + 1);
+      }, 10000);
+    }
+
+    // Start auto-rotation
+    resetAutoSlide();
+  </script>
+
+  <style>
+    /* Google Fonts are loaded in head */
+    
+    /* Reset homepage-specific styles */
+    body.homepage #content.container {
+      padding: 0;
+      max-width: none;
+    }
+
+    /* Section 1: Hero */
+    .hero-section {
+      position: relative;
+      width: 100%;
+      height: 500px;
+      background-image: url('/uploads/homepage_photo1.jpg');
+      background-size: cover;
+      background-position: center;
+      margin-top: 0;
+    }
+
+    .hero-overlay {
+      position: relative;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      color: #000;
+      text-align: center;
+      margin: 0 0 20px 0;
+      padding: 0 20px;
+    }
+
+    .hero-button {
+      display: inline-block;
+      width: 115px;
+      height: 45px;
+      background: #F3e35d;
+      color: #000;
+      font-family: 'Raleway', sans-serif;
+      font-size: 20px;
+      text-decoration: none;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+    }
+
+    .hero-button:hover {
+      background: #e6d54a;
+    }
+
+    /* Section 2: Green Intro */
+    .intro-section {
+      background: #3E6947;
+      padding: 60px 20px;
+    }
+
+    .intro-content {
+      max-width: 980px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .intro-text-large {
+      font-family: 'Playfair Display', serif;
+      font-size: 38px;
+      color: #fff;
+      margin: 0 0 30px 0;
+      line-height: 1.4;
+    }
+
+    .intro-text-small {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      color: #fff;
+      margin: 0;
+    }
+
+    /* Section 3: Activities */
+    .activities-section {
+      position: relative;
+      width: 100%;
+      min-height: 600px;
+      background-image: url('/uploads/homepage_photo2.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .activities-overlay {
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .activities-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 40px;
+      color: #fff;
+      margin: 0 0 20px 0;
+    }
+
+    .activities-subtitle {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      color: #fff;
+      margin: 0 0 40px 0;
+    }
+
+    .activities-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      max-width: 800px;
+      margin: 0 auto 40px;
+    }
+
+    .activity-item {
+      text-align: center;
+    }
+
+    .activity-icon {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      margin-bottom: 10px;
+    }
+
+    .activity-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      color: #fff;
+      margin: 0;
+    }
+
+    .activities-button {
+      display: inline-block;
+      padding: 12px 30px;
+      background: #F3e35d;
+      color: #000;
+      font-family: 'Raleway', sans-serif;
+      font-size: 16px;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .activities-button:hover {
+      background: #e6d54a;
+    }
+
+    /* Section 4: Gallery */
+    .gallery-section {
+      background: #3E6947;
+      padding: 40px 20px 10px 20px;
+    }
+    /* Section 4: Gallery */
+    .gallery-section-photos {
+      background: #000;
+      padding: 20px 20px;
+    }
+
+    .gallery-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 40px;
+      color: #fff;
+      text-align: center;
+      margin: 0 0 40px 0;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .gallery-photo {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    /* Section 5: Testimonials */
+    .testimonials-section {
+      background: #3E6947;
+      padding: 60px 20px;
+      position: relative;
+    }
+
+    .testimonials-container {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .testimonials-slider {
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+      min-height: 200px;
+    }
+
+    .testimonial-slide {
+      display: none;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .testimonial-slide.active {
+      display: block;
+    }
+
+    .testimonial-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      color: #fff;
+      line-height: 1.6;
+      margin: 0 0 20px 0;
+      font-style: italic;
+    }
+
+    .testimonial-person {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      color: #fff;
+      margin: 0;
+    }
+
+    .carousel-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.3);
+      color: #fff;
+      border: none;
+      font-size: 24px;
+      padding: 10px 15px;
+      cursor: pointer;
+      border-radius: 4px;
+      z-index: 10;
+    }
+
+    .carousel-arrow:hover {
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+    .carousel-prev {
+      left: 10px;
+    }
+
+    .carousel-next {
+      right: 10px;
+    }
+
+    .carousel-dots {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .dot {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      margin: 0 5px;
+      cursor: pointer;
+    }
+
+    .dot.active {
+      background: transparent;
+      border: 2px solid #fff;
+      width: 14px;
+      height: 14px;
+    }
+
+    /* Section 6: Final CTA */
+    .final-cta-section {
+      position: relative;
+      width: 100%;
+      height: 580px;
+      background-image: url('/uploads/vivid_campfire.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .cta-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(62, 105, 71, 0.9);
+      padding: 40px 60px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .cta-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 40px;
+      color: #fff;
+      margin: 0 0 30px 0;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 15px 40px;
+      background: #F3e35d;
+      color: #000;
+      font-family: 'Raleway', sans-serif;
+      font-size: 18px;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .cta-button:hover {
+      background: #e6d54a;
+    }
+
+    /* Desktop Styles */
+    @media (min-width: 900px) {
+      .hero-section {
+        height: 820px;
+      }
+
+      .hero-overlay {
+        align-items: flex-start;
+        justify-content: flex-start;
+      }
+
+      .hero-title {
+        font-size: 72px;
+        color: #fff;
+        width: 481px;
+        line-height: 1.25em;
+        margin-top: 378px;
+        margin-left: calc((100% - 980px) * 0.5);
+        margin-bottom: 10px;
+        text-align: left;
+        padding: 0;
+      }
+
+      .hero-button {
+        margin-left: calc((100% - 980px) * 0.5);
+        margin-top: 80px;
+      }
+
+      .intro-text-large {
+        font-size: 38px;
+      }
+
+      .activities-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 30px;
+      }
+
+      .activity-icon {
+        width: 100px;
+        height: 100px;
+      }
+    }
+
+    /* Mobile Styles */
+    @media (max-width: 899px) {
+      .intro-text-large {
+        font-size: 28px;
+      }
+
+      .activities-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .gallery-photo {
+        height: 150px;
+      }
+
+      .carousel-arrow {
+        font-size: 18px;
+        padding: 8px 12px;
+      }
+
+      .carousel-prev {
+        left: 5px;
+      }
+
+      .carousel-next {
+        right: 5px;
+      }
+    }
+  </style>
+</body>
+</html>

@@ -19,17 +19,8 @@ title = "Scarsdale Pack 440"
     url = "/calendar/"
     weight = 3
   [[menu.main]]
-    name = "Activities"
-    url = "/activities/"
-    weight = 4
-  [[menu.main]]
-    name = "Camping Info"
-    url = "/activities/camping-info/"
-    parent = "Activities"
-    weight = 41
-  [[menu.main]]
-    name = "Volunteer"
-    url = "/volunteer/"
+    name = "Camping"
+    url = "/camping/"
     weight = 5
   [[menu.main]]
     name = "Forms"

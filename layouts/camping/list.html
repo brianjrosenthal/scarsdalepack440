@@ -1,0 +1,58 @@
+{{ define "main" }}
+<div class="camping-container">
+  <div class="camping-content">
+    <div class="camping-card">
+      {{ .Content }}
+    </div>
+  </div>
+</div>
+
+<style>
+  .camping-container {
+    background: #fff;
+    color: #333;
+    min-height: 500px;
+    padding: 0 16px 40px 16px;
+  }
+  
+  .camping-content {
+    max-width: 980px;
+  }
+  
+  .camping-card {
+    padding: 25px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    line-height: 1.8;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .camping-card strong {
+    color: #3E6947;
+    font-weight: 600;
+    font-size: 18px;
+  }
+  
+  .camping-card ul {
+    margin: 10px 0 20px 0;
+    padding-left: 20px;
+  }
+  
+  .camping-card li {
+    margin: 8px 0;
+  }
+  
+  .camping-card p {
+    margin: 8px 0;
+  }
+  
+  /* Desktop layout */
+  @media (min-width: 550px) {
+    .camping-container {
+      padding: 0 20px 40px 20px;
+    }
+  }
+</style>
+{{ end }}
