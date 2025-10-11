@@ -47,24 +47,7 @@
   </section>
 
   <!-- Section 4: Photo Gallery Carousel -->
-  <section class="gallery-section">
-    <div class="gallery-carousel-container">
-      <button class="gallery-arrow gallery-prev" onclick="changeGallerySlide(-1)">&#10094;</button>
-      <div class="gallery-carousel">
-        {{- range $index, $photo := .Params.gallery_photos -}}
-        <div class="gallery-slide {{ if eq $index 0 }}active{{ end }}">
-          <img src="/uploads/homepage_photos/{{ $photo }}" alt="Scout activity photo" class="gallery-photo">
-        </div>
-        {{- end -}}
-      </div>
-      <button class="gallery-arrow gallery-next" onclick="changeGallerySlide(1)">&#10095;</button>
-    </div>
-    <div class="gallery-dots">
-      {{- range $index, $photo := .Params.gallery_photos -}}
-      <span class="gallery-dot {{ if eq $index 0 }}active{{ end }}" onclick="goToGallerySlide({{ $index }})"></span>
-      {{- end -}}
-    </div>
-  </section>
+
 
   <!-- Section 5: Testimonials Carousel -->
   <section class="testimonials-section">
