@@ -7,10 +7,6 @@ title = "Scarsdale Pack 440"
 
 [menu]
   [[menu.main]]
-    name = "Home"
-    url = "/"
-    weight = 1
-  [[menu.main]]
     name = "Join"
     url = "/join/"
     weight = 2
