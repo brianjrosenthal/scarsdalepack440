@@ -46,15 +46,23 @@
     </div>
   </section>
 
-  <!-- Section 4: Photo Gallery -->
+  <!-- Section 4: Photo Gallery Carousel -->
   <section class="gallery-section">
-    <h2 class="gallery-title">Scout Life Gallery</h2>
-</section>
-<section class="gallery-section-photos">
-    <div class="gallery-grid">
-      {{ range seq 1 12 }}
-      <img src="/uploads/homepage_photos/{{ . }}.jpg" alt="Scout activity {{ . }}" class="gallery-photo">
-      {{ end }}
+    <div class="gallery-carousel-container">
+      <button class="gallery-arrow gallery-prev" onclick="changeGallerySlide(-1)">&#10094;</button>
+      <div class="gallery-carousel">
+        {{- range $index, $photo := .Params.gallery_photos -}}
+        <div class="gallery-slide {{ if eq $index 0 }}active{{ end }}">
+          <img src="/uploads/homepage_photos/{{ $photo }}" alt="Scout activity photo" class="gallery-photo">
+        </div>
+        {{- end -}}
+      </div>
+      <button class="gallery-arrow gallery-next" onclick="changeGallerySlide(1)">&#10095;</button>
+    </div>
+    <div class="gallery-dots">
+      {{- range $index, $photo := .Params.gallery_photos -}}
+      <span class="gallery-dot {{ if eq $index 0 }}active{{ end }}" onclick="goToGallerySlide({{ $index }})"></span>
+      {{- end -}}
     </div>
   </section>
 
@@ -92,6 +100,7 @@
   {{ partial "footer.html" . }}
 
   <script>
+    // Testimonials Carousel
     let currentSlide = 0;
     const slides = document.querySelectorAll('.testimonial-slide');
     const dots = document.querySelectorAll('.dot');
@@ -124,8 +133,31 @@
       }, 10000);
     }
 
-    // Start auto-rotation
+    // Start testimonials auto-rotation
     resetAutoSlide();
+
+    // Gallery Carousel
+    let currentGallerySlide = 0;
+    const gallerySlides = document.querySelectorAll('.gallery-slide');
+    const galleryDots = document.querySelectorAll('.gallery-dot');
+
+    function showGallerySlide(n) {
+      gallerySlides.forEach(slide => slide.classList.remove('active'));
+      galleryDots.forEach(dot => dot.classList.remove('active'));
+      
+      currentGallerySlide = (n + gallerySlides.length) % gallerySlides.length;
+      
+      gallerySlides[currentGallerySlide].classList.add('active');
+      galleryDots[currentGallerySlide].classList.add('active');
+    }
+
+    function changeGallerySlide(direction) {
+      showGallerySlide(currentGallerySlide + direction);
+    }
+
+    function goToGallerySlide(n) {
+      showGallerySlide(n);
+    }
   </script>
 
   <style>
@@ -283,15 +315,10 @@
       background: #e6d54a;
     }
 
-    /* Section 4: Gallery */
+    /* Section 4: Gallery Carousel */
     .gallery-section {
       background: #3E6947;
-      padding: 40px 20px 10px 20px;
-    }
-    /* Section 4: Gallery */
-    .gallery-section-photos {
-      background: #000;
-      padding: 20px 20px;
+      padding: 60px 20px 80px;
     }
 
     .gallery-title {
@@ -302,19 +329,90 @@
       margin: 0 0 40px 0;
     }
 
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 15px;
-      max-width: 1200px;
+    .gallery-carousel-container {
+      max-width: 1000px;
       margin: 0 auto;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .gallery-photo {
+    .gallery-carousel {
       width: 100%;
-      height: 200px;
-      object-fit: cover;
+      overflow: hidden;
+      position: relative;
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gallery-slide {
+      display: none;
+      text-align: center;
+      width: 100%;
+    }
+
+    .gallery-slide.active {
+      display: block;
+    }
+
+    .gallery-slide img {
+      max-width: 100%;
+      max-height: 600px;
+      height: auto;
+      width: auto;
+      object-fit: contain;
       border-radius: 8px;
+    }
+
+    .gallery-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.3);
+      color: #fff;
+      border: none;
+      font-size: 24px;
+      padding: 10px 15px;
+      cursor: pointer;
+      border-radius: 4px;
+      z-index: 10;
+    }
+
+    .gallery-arrow:hover {
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+    .gallery-prev {
+      left: 10px;
+    }
+
+    .gallery-next {
+      right: 10px;
+    }
+
+    .gallery-dots {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .gallery-dot {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      margin: 0 5px;
+      cursor: pointer;
+    }
+
+    .gallery-dot.active {
+      background: transparent;
+      border: 2px solid #fff;
+      width: 14px;
+      height: 14px;
     }
 
     /* Section 5: Testimonials */

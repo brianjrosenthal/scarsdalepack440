@@ -15,14 +15,24 @@
         <span>☰</span>
       </button>
       <ul class="menu" id="main-menu">
-        {{- $current := . -}}
+        {{- $currentPage := . -}}
+        {{- $currentURL := $currentPage.RelPermalink -}}
         {{- range site.Menus.main -}}
-          <li class="menu-item {{ if .HasChildren }}has-children{{ end }} {{ if or ($current.IsMenuCurrent "main" .) ($current.HasMenuCurrent "main" .) }}is-active{{ end }}">
+          {{- $menuURL := .URL | relURL -}}
+          {{- $isActive := false -}}
+          {{- if eq $menuURL "/" -}}
+            {{- $isActive = eq $currentURL "/" -}}
+          {{- else -}}
+            {{- $isActive = or (eq $currentURL $menuURL) (hasPrefix $currentURL (printf "%s/" (strings.TrimSuffix "/" $menuURL))) -}}
+          {{- end -}}
+          <li class="menu-item {{ if .HasChildren }}has-children{{ end }} {{ if $isActive }}is-active{{ end }}">
             <a href="{{ .URL | relURL }}">{{ .Name }}</a>
             {{- if .HasChildren -}}
               <ul class="submenu">
                 {{- range .Children -}}
-                  <li class="submenu-item {{ if or ($current.IsMenuCurrent "main" .) ($current.HasMenuCurrent "main" .) }}is-active{{ end }}">
+                  {{- $childURL := .URL | relURL -}}
+                  {{- $childIsActive := eq $currentURL $childURL -}}
+                  <li class="submenu-item {{ if $childIsActive }}is-active{{ end }}">
                     <a href="{{ .URL | relURL }}">{{ .Name }}</a>
                   </li>
                 {{- end -}}

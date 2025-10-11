@@ -21,4 +21,13 @@ testimonials:
     person: "Delfina K."
   - quote: "We liked Cub Scouting because it fosters civic values, cooperation and outdoor activities in a world that is increasingly self-absorbed, hyper-competitive, and virtual."
     person: "Hyun Hwang"
+gallery_photos:
+  - "1.jpg"
+  - "2.jpg"
+  - "3.jpg"
+  - "4.jpg"
+  - "5.jpg"
+  - "6.jpg"
+  - "7.jpg"
+  - "10.jpg"
 ---
