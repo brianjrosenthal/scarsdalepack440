@@ -10,31 +10,31 @@
 <body>
   {{ partial "header.html" . }}
 
-  <!-- Responsive title for FAQ page -->
-  <div class="faq-title">
-    <h1 style="color: #000; font-size: 28px; margin: 0px 0px 0px 20px; font-weight: 700;">{{ .Title }}</h1>
+  <!-- Responsive title for Calendar page -->
+  <div class="calendar-title">
+    <h1 style="color: #000; font-size: 28px; margin: 0; font-weight: 700;">{{ .Title }}</h1>
   </div>
 
   <style>
     /* Mobile-first: title flows in document, content follows */
-    .faq-title {
+    .calendar-title {
       padding: 20px 16px 0 20px;
     }
     
     #content.container {
-      padding-top: 15px;
+      padding-top: 0px;
     }
     
     /* Desktop: absolute title to clear logo, content clears logo vertically */
     @media (min-width: 550px) {
-      .faq-title {
+      .calendar-title {
         position: absolute;
         left: 340px;
         top: 200px;
         z-index: 10;
         padding: 0;
       }
-      .faq-title h1 {
+      .calendar-title h1 {
         font-size: 36px !important;
       }
       

@@ -1,0 +1,35 @@
+{{ define "main" }}
+<div class="calendar-main-container" style="background: #fff; color: #333; min-height: 500px;">
+  <div class="calendar-content" style="max-width: 980px;">
+    <div style="line-height: 1.8; font-size: 16px;">
+      {{ .Content }}
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Mobile-first: natural flow with padding */
+  .calendar-main-container {
+    padding: 0 16px 40px 16px;
+  }
+  
+  .calendar-content {
+    margin: 0 auto;
+  }
+  
+  /* Desktop: positioned layout */
+  @media (min-width: 550px) {
+    .calendar-main-container {
+      margin-left: 0;
+      margin-right: 0;
+      margin-top: 0;
+      padding: 0 20px 40px 20px;
+    }
+    
+    .calendar-content {
+      margin-left: 0;
+      padding-left: 0;
+    }
+  }
+</style>
+{{ end }}

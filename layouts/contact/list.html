@@ -1,24 +1,133 @@
 {{ define "main" }}
-<div style="margin-left: 50px; margin-right: 40px; background: #3E6947; color: #fff; min-height: 500px; padding: 40px 20px 40px 20px; margin-top: 60px;">
-  <div style="max-width: 980px;">
+<div class="contact-container">
+  <div class="contact-wrapper">
     <div>
       {{- with .Params.intro_text -}}
-      <div style="display: flex; align-items: center; gap: 30px; margin-bottom: 40px; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 12px;">
-        <p style="color: #fff; margin: 5px 0; font-size: 18px;">{{ . }}</p>
+      <div class="contact-intro">
+        <p>{{ . }}</p>
       </div>
       {{- end -}}
       
       {{- range .Params.contacts -}}
-      <div style="display: flex; align-items: center; gap: 30px; margin-bottom: 40px; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 12px;">
-        <img src="{{ .photo }}" alt="{{ .name }}" style="width: 150px; height: 150px; border-radius: 50%; border: 6px solid #fff; object-fit: cover; flex-shrink: 0;">
-        <div>
-          <h3 style="color: #fff; font-size: 24px; margin: 0 0 10px 0; font-weight: 600;">{{ .name }}</h3>
-          <p style="color: #fff; margin: 5px 0; font-size: 18px;">{{ .phone }}</p>
-          <p style="color: #fff; margin: 5px 0; font-size: 18px;"><a href="mailto:{{ .email }}" style="color: #fff; text-decoration: underline;">{{ .email }}</a></p>
+      <div class="contact-card">
+        <img src="{{ .photo }}" alt="{{ .name }}" class="contact-photo">
+        <div class="contact-info">
+          <h3>{{ .name }}</h3>
+          <p>{{ .phone }}</p>
+          <p><a href="mailto:{{ .email }}">{{ .email }}</a></p>
         </div>
       </div>
       {{- end -}}
     </div>
   </div>
 </div>
+
+<style>
+  .contact-container {
+    background: #3E6947;
+    color: #fff;
+    min-height: 500px;
+    padding: 0 16px 40px 16px;
+  }
+  
+  .contact-wrapper {
+    max-width: 980px;
+    width: 100%;
+  }
+  
+  .contact-intro {
+    margin-bottom: 30px;
+    padding: 15px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 12px;
+  }
+  
+  .contact-intro p {
+    color: #fff;
+    margin: 0;
+    font-size: 16px;
+  }
+  
+  .contact-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 12px;
+  }
+  
+  .contact-photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 4px solid #fff;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+  
+  .contact-info h3 {
+    color: #fff;
+    font-size: 20px;
+    margin: 0 0 8px 0;
+    font-weight: 600;
+  }
+  
+  .contact-info p {
+    color: #fff;
+    margin: 4px 0;
+    font-size: 16px;
+  }
+  
+  .contact-info a {
+    color: #fff;
+    text-decoration: underline;
+  }
+  
+  /* Desktop layout */
+  @media (min-width: 550px) {
+    .contact-container {
+      margin-left: 50px;
+      margin-right: 40px;
+      margin-top: 60px;
+      padding: 40px 20px;
+    }
+    
+    .contact-intro {
+      margin-bottom: 40px;
+      padding: 20px;
+    }
+    
+    .contact-intro p {
+      font-size: 18px;
+    }
+    
+    .contact-card {
+      flex-direction: row;
+      align-items: center;
+      text-align: left;
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+    
+    .contact-photo {
+      width: 150px;
+      height: 150px;
+      border: 6px solid #fff;
+    }
+    
+    .contact-info h3 {
+      font-size: 24px;
+      margin: 0 0 10px 0;
+    }
+    
+    .contact-info p {
+      margin: 5px 0;
+      font-size: 18px;
+    }
+  }
+</style>
 {{ end }}
