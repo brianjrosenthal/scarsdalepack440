@@ -16,7 +16,7 @@
   <!-- Section 1: Hero with Background Image -->
   <section class="hero-section">
     <div class="hero-overlay">
-      <h1 class="hero-title">{{ .Params.hero_title }}</h1>
+      <h1 class="hero-title">{{ .Params.hero_title | safeHTML }}</h1>
       <a href="/join/" class="hero-button">Join</a>
     </div>
   </section>
@@ -82,7 +82,9 @@
   <!-- Section 6: Final CTA -->
   <section class="final-cta-section">
     <div class="cta-overlay">
-      <h2 class="cta-title">Ready for Cub Scouts?</h2>
+      <div class="cta-title-wrapper">
+        <h2 class="cta-title">Ready for Cub Scouts?</h2>
+      </div>
       <a href="/join/" class="cta-button">Join</a>
     </div>
   </section>
@@ -253,15 +255,15 @@
     }
 
     .activity-icon {
-      width: 80px;
-      height: 80px;
+      width: 220px;
+      height: 220px;
       object-fit: contain;
       margin-bottom: 10px;
     }
 
     .activity-name {
       font-family: 'Playfair Display', serif;
-      font-size: 16px;
+      font-size: 22px;
       color: #fff;
       margin: 0;
     }
@@ -428,17 +430,24 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background: rgba(62, 105, 71, 0.9);
-      padding: 40px 60px;
-      border-radius: 8px;
       text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .cta-title-wrapper {
+      background: #3E6947;
+      padding: 5px;
+      display: inline-block;
+      margin-bottom: 30px;
     }
 
     .cta-title {
       font-family: 'Playfair Display', serif;
       font-size: 40px;
       color: #fff;
-      margin: 0 0 30px 0;
+      margin: 0;
     }
 
     .cta-button {
@@ -494,14 +503,32 @@
         gap: 30px;
       }
 
-      .activity-icon {
-        width: 100px;
-        height: 100px;
+      /* Move arrows out on desktop */
+      .carousel-prev {
+        left: -60px;
+      }
+
+      .carousel-next {
+        right: -60px;
       }
     }
 
     /* Mobile Styles */
     @media (max-width: 899px) {
+      /* Mobile hero text - white, bigger, with line break */
+      .hero-title {
+        color: #fff;
+        font-size: 56px;
+        line-height: 1.2;
+      }
+
+      /* Make mobile Join button bigger */
+      .hero-button {
+        width: 207px;
+        height: 81px;
+        font-size: 36px;
+      }
+
       .intro-text-large {
         font-size: 28px;
       }

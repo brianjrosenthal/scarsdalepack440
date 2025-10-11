@@ -44,7 +44,7 @@ a:hover{text-decoration:underline}
 .content p{margin:0 0 12px 0;color:var(--muted)}
 
 /* Footer */
-.site-footer{background:var(--green);color:#fff;margin-top:40px}
+.site-footer{background:var(--green);color:#fff;}
 .footer-inner{display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:56px}
 .footer-email{color:#fff;font-weight:600}
 

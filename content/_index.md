@@ -1,6 +1,6 @@
 ---
 title: "Pack 440"
-hero_title: "Pack 440 Welcomes You"
+hero_title: "Pack 440<br>Welcomes You"
 intro_text_1: "Scouting is family, fun, friends and a lifetime of adventure! It's the place where young people can grow to become their very best future selves."
 intro_text_2: "We are non-denominational and take children of all faiths, races, identities and creeds."
 activities_title: "What activities can I expect?"
