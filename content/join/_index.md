@@ -1,5 +1,5 @@
 ---
-title: "To join:"
+title: "How to join:"
 payment_methods:
   - title: "Paypal"
     items:
