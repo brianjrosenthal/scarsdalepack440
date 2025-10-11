@@ -11,40 +11,11 @@
   {{ partial "header.html" . }}
 
   <!-- Responsive title for Contact page -->
-  <div class="contact-title">
-    <h1 style="color: #000; font-size: 28px; margin: 0; font-weight: 700;">{{ .Title }}</h1>
+  <div class="page-title-responsive">
+    <h1>{{ .Title }}</h1>
   </div>
 
-  <style>
-    /* Mobile-first: title flows in document, content follows */
-    .contact-title {
-      padding: 20px 16px 0 20px;
-    }
-    
-    #content.container {
-      padding-top: 15px;
-    }
-    
-    /* Desktop: absolute title to clear logo, content clears logo vertically */
-    @media (min-width: 550px) {
-      .contact-title {
-        position: absolute;
-        left: 340px;
-        top: 200px;
-        z-index: 10;
-        padding: 0;
-      }
-      .contact-title h1 {
-        font-size: 36px !important;
-      }
-      
-      #content.container {
-        padding-top: 110px;
-      }
-    }
-  </style>
-
-  <main id="content" class="container">
+  <main id="content" class="container page-content-responsive">
     {{ block "main" . }}{{ .Content }}{{ end }}
   </main>
 

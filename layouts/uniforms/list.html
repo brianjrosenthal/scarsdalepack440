@@ -1,0 +1,103 @@
+{{ define "main" }}
+<div class="uniforms-container">
+  <div class="uniforms-content">
+    <div class="uniforms-image-wrapper">
+      <img src="/uploads/uniforms.png" alt="Pack 440 Uniforms" class="uniforms-image">
+    </div>
+    <div class="uniforms-card">
+      {{ .Content }}
+    </div>
+    <div class="uniforms-button-wrapper">
+      <a href="https://www.scoutshop.org/cub-scout-collection" target="_blank" rel="noopener noreferrer" class="order-uniform-button">
+        Order Uniform Now
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .uniforms-container {
+    background: #fff;
+    color: #333;
+    min-height: 500px;
+    padding: 0 16px 40px 16px;
+  }
+  
+  .uniforms-content {
+    max-width: 980px;
+  }
+  
+  .uniforms-image-wrapper {
+    width: 100%;
+    margin-bottom: 30px;
+  }
+  
+  .uniforms-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  
+  .uniforms-card {
+    padding: 25px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    line-height: 1.8;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .uniforms-card strong {
+    color: #3E6947;
+    font-weight: 600;
+  }
+  
+  .uniforms-card ul {
+    margin: 10px 0;
+    padding-left: 20px;
+  }
+  
+  .uniforms-card li {
+    margin: 8px 0;
+  }
+  
+  .uniforms-button-wrapper {
+    margin-top: 30px;
+    text-align: center;
+  }
+  
+  .order-uniform-button {
+    display: inline-block;
+    padding: 15px 40px;
+    background: #3E6947;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(62, 105, 71, 0.3);
+  }
+  
+  .order-uniform-button:hover {
+    background: #2d4f35;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(62, 105, 71, 0.4);
+    text-decoration: none;
+  }
+  
+  .order-uniform-button:active {
+    transform: translateY(0);
+  }
+  
+  /* Desktop layout */
+  @media (min-width: 550px) {
+    .uniforms-container {
+      padding: 0 20px 40px 20px;
+    }
+  }
+</style>
+{{ end }}

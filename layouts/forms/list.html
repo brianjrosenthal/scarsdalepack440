@@ -1,0 +1,116 @@
+{{ define "main" }}
+<div class="forms-container">
+  <div class="forms-grid">
+    {{- with .Params.forms -}}
+      {{- range . -}}
+      <a href="{{ .link }}" target="_blank" rel="noopener noreferrer" class="form-card-link">
+        <div class="form-card">
+          <div class="form-image-wrapper">
+            <img src="{{ .image }}" alt="{{ .name }}" class="form-image">
+          </div>
+          <h3 class="form-name">{{ .name }}</h3>
+        </div>
+      </a>
+      {{- end -}}
+    {{- else -}}
+      <p>No forms found. Debug info: {{ .Params }}</p>
+    {{- end -}}
+  </div>
+</div>
+
+<style>
+  .forms-container {
+    background: #fff;
+    color: #333;
+    min-height: 500px;
+    padding: 0 16px 40px 16px;
+  }
+  
+  .forms-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+    max-width: 980px;
+  }
+  
+  .form-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 25px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+  }
+  
+  .form-image-wrapper {
+    width: 100%;
+    max-width: 250px;
+    margin-bottom: 20px;
+  }
+  
+  .form-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  
+  .form-name {
+    color: #3E6947;
+    font-size: 20px;
+    margin: 0;
+    font-weight: 600;
+  }
+  
+  /* Link styling */
+  .form-card-link {
+    text-decoration: none;
+    display: block;
+    transition: transform 0.2s ease;
+  }
+  
+  .form-card-link:hover {
+    transform: translateY(-4px);
+  }
+  
+  .form-card-link:hover .form-card {
+    border-color: #3E6947;
+    box-shadow: 0 4px 12px rgba(62, 105, 71, 0.15);
+  }
+  
+  .form-card-link:hover .form-name {
+    color: #2d4f35;
+  }
+  
+  /* Desktop: 3 columns */
+  @media (min-width: 900px) {
+    .forms-container {
+      padding: 0 20px 40px 20px;
+    }
+    
+    .forms-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+    
+    .form-name {
+      font-size: 18px;
+    }
+  }
+  
+  /* Tablet: 2 columns */
+  @media (min-width: 550px) and (max-width: 899px) {
+    .forms-container {
+      padding: 0 20px 40px 20px;
+    }
+    
+    .forms-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 25px;
+    }
+  }
+</style>
+{{ end }}
