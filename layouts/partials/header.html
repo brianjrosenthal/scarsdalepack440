@@ -20,9 +20,7 @@
         {{- range site.Menus.main -}}
           {{- $menuURL := .URL | relURL -}}
           {{- $isActive := false -}}
-          {{- if eq $menuURL "/" -}}
-            {{- $isActive = eq $currentURL "/" -}}
-          {{- else -}}
+          {{- if ne $menuURL "/" -}}
             {{- $isActive = or (eq $currentURL $menuURL) (hasPrefix $currentURL (printf "%s/" (strings.TrimSuffix "/" $menuURL))) -}}
           {{- end -}}
           <li class="menu-item {{ if .HasChildren }}has-children{{ end }} {{ if $isActive }}is-active{{ end }}">
