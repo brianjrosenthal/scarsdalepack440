@@ -1,8 +1,12 @@
 ---
-title: "Campout Packing List"
+title: "Camping"
+intro_text: "We go camping twice a year, and every year, we take many families camping who have never been camping before. We can tell you exactly what gear to get if you want to stay overnight, but we also choose places 45-60 minutes away so we make it easy if you want to stay for the activities and dinner and leave after the campfire."
+gear_guide_title: "Purchasing Gear"
+gear_guide_text: "We wrote this guide ([\"Tents, Sleeping Bags, and Mattress Pads\"](https://docs.google.com/document/d/1eqnLOGqvld6t8COMf7ZVMR3zLgLvGWSREPckHs2hKP8/edit)) which is how to buy tents, sleeping bags, and mattress pads. The biggest takeaway from camping with many families over the years is that adults generally need a foam mattress pad instead of an inflatable one, so we recommend buying the foam mattress pad in the guide."
+packing_list_title: "Packing List"
 ---
 
-**Basics:** (see "Tents, Sleeping Bags, and Mattress Pads")
+**Basics:** (see ["Tents, Sleeping Bags, and Mattress Pads"](https://docs.google.com/document/d/1eqnLOGqvld6t8COMf7ZVMR3zLgLvGWSREPckHs2hKP8/edit))
 - Tent and ground cover (plus "tent footprint" for inside tent)
 - Mattress pad (I recommend foam and there is a particular recommendation in the doc)
 - Sleeping Bag (rated to at least 25 degrees)

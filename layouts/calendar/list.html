@@ -4,6 +4,9 @@
     <div class="calendar-card" style="padding: 0px 25px; background: #f9f9f9; border-radius: 12px; border: 1px solid #e0e0e0; line-height: 1.8; font-size: 16px; color: #333;">
       {{ .Content }}
     </div>
+    <div class="calendar-cta">
+      <a href="https://my.scarsdalepack440.org/public_calendar.php" class="cta-button" target="_blank">View Public Calendar</a>
+    </div>
   </div>
 </div>
 
@@ -26,6 +29,30 @@
   
   .calendar-card a:hover {
     color: #2d4f35;
+  }
+  
+  /* CTA Button */
+  .calendar-cta {
+    text-align: center;
+    margin-top: 30px;
+  }
+  
+  .cta-button {
+    display: inline-block;
+    padding: 15px 40px;
+    background: #3E6947;
+    color: #fff;
+    font-family: 'Raleway', sans-serif;
+    font-size: 18px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 600;
+    transition: background 0.3s ease;
+  }
+  
+  .cta-button:hover {
+    background: #2d4f35;
+    text-decoration: none;
   }
   
   /* Desktop: positioned layout */

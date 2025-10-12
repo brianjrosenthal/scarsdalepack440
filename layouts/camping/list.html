@@ -1,9 +1,32 @@
 {{ define "main" }}
 <div class="camping-container">
   <div class="camping-content">
-    <div class="camping-card">
-      {{ .Content }}
+    <!-- Intro Text -->
+    {{- if .Params.intro_text -}}
+    <div class="camping-intro">
+      <p>{{ .Params.intro_text }}</p>
     </div>
+    {{- end -}}
+    
+    <!-- Purchasing Gear Section -->
+    {{- if .Params.gear_guide_title -}}
+    <div class="camping-section">
+      <h2>{{ .Params.gear_guide_title }}</h2>
+      <div class="camping-card">
+        <p>{{ .Params.gear_guide_text | markdownify }}</p>
+      </div>
+    </div>
+    {{- end -}}
+    
+    <!-- Packing List Section -->
+    {{- if .Params.packing_list_title -}}
+    <div class="camping-section">
+      <h2>{{ .Params.packing_list_title }}</h2>
+      <div class="camping-card">
+        {{ .Content }}
+      </div>
+    </div>
+    {{- end -}}
   </div>
 </div>
 
@@ -17,6 +40,28 @@
   
   .camping-content {
     max-width: 980px;
+    margin: 0 auto;
+  }
+  
+  .camping-intro {
+    margin-bottom: 40px;
+  }
+  
+  .camping-intro p {
+    font-size: 18px;
+    line-height: 1.8;
+    color: #555;
+  }
+  
+  .camping-section {
+    margin-bottom: 40px;
+  }
+  
+  .camping-section h2 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #000;
+    margin: 0 0 20px 0;
   }
   
   .camping-card {
@@ -27,6 +72,16 @@
     line-height: 1.8;
     font-size: 16px;
     color: #333;
+  }
+  
+  .camping-card a {
+    color: #3E6947;
+    text-decoration: underline;
+    font-weight: bold;
+  }
+  
+  .camping-card a:hover {
+    color: #2d4f35;
   }
   
   .camping-card strong {
@@ -52,6 +107,14 @@
   @media (min-width: 550px) {
     .camping-container {
       padding: 0 20px 40px 20px;
+    }
+    
+    .camping-intro p {
+      font-size: 19px;
+    }
+    
+    .camping-section h2 {
+      font-size: 32px;
     }
   }
 </style>
