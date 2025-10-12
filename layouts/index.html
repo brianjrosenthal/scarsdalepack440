@@ -47,6 +47,161 @@
   </section>
 
   <!-- Section 4: Photo Gallery Carousel -->
+  <!-- Justified Rows gallery styles -->
+<style>
+  :root { --jr-gap: 8px; --jr-row: 260px; }
+
+  .jr-gallery {
+    position: relative;
+    width: 100%;
+    /* Smooth height changes when re-layout happens */
+    transition: height .25s ease;
+  }
+
+  .jr-tile {
+    position: absolute;
+    overflow: hidden;
+    border-radius: 12px;
+    background: #111827; /* tweak to your theme */
+    box-shadow: 0 4px 20px rgba(0,0,0,.18);
+  }
+
+  .jr-tile img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .2s ease;
+  }
+
+  .jr-tile:hover img { transform: scale(1.02); }
+</style>
+
+<!-- Layout engine (CDN ESM) -->
+<script type="module">
+  import justifiedLayout from 'https://cdn.skypack.dev/justified-layout@3';
+
+  // Attach to any .jr-gallery on the page (supports multiple galleries)
+  document.addEventListener('DOMContentLoaded', () => {
+    const galleries = document.querySelectorAll('.jr-gallery');
+    galleries.forEach(setupJustifiedGallery);
+  });
+
+  function setupJustifiedGallery(container) {
+    // Config (can be overridden per container via data-* if you like)
+    const gap = Number(container.dataset.gap || getCSSVar('--jr-gap', 8));
+    const targetRow = Number(container.dataset.row || getCSSVar('--jr-row', 260));
+    let cleanup = () => {};
+
+    // Build full list of image URLs from data-files JSON
+    /** @type {string[]} */
+    const files = JSON.parse(container.dataset.files || '[]');
+    if (!files.length) return;
+
+    // Preload images to get intrinsic sizes
+    Promise.all(files.map(loadImageMeta))
+      .then(photos => {
+        // Store for reuse on resize
+        container._jrPhotos = photos;
+
+        const render = () => {
+          cleanup();
+          const ratios = photos.map(p => p.width / p.height);
+          const geometry = justifiedLayout(ratios, {
+            containerWidth: Math.floor(container.clientWidth || container.offsetWidth),
+            targetRowHeight: targetRow,
+            boxSpacing: gap,
+            showWidows: true
+          });
+
+          container.style.height = Math.ceil(geometry.containerHeight) + 'px';
+
+          const els = [];
+          geometry.boxes.forEach((box, i) => {
+            const p = photos[i];
+            const a = document.createElement('a');
+            a.className = 'jr-tile';
+            a.href = p.src;
+            a.target = '_blank';
+            a.rel = 'noopener';
+
+            Object.assign(a.style, {
+              left: box.left + 'px',
+              top: box.top + 'px',
+              width: Math.ceil(box.width) + 'px',
+              height: Math.ceil(box.height) + 'px'
+            });
+
+            const img = document.createElement('img');
+            img.src = p.src;
+            img.alt = p.alt || '';
+            img.loading = 'lazy';
+            img.decoding = 'async';
+
+            a.appendChild(img);
+            container.appendChild(a);
+            els.push(a);
+          });
+
+          cleanup = () => els.forEach(el => el.remove());
+        };
+
+        // Initial render + debounced resize
+        render();
+        let t;
+        const onResize = () => { clearTimeout(t); t = setTimeout(render, 150); };
+        window.addEventListener('resize', onResize);
+
+        // Keep references so you could re-render externally if needed
+        container._jrRender = render;
+        container._jrOnResize = onResize;
+      })
+      .catch(err => console.error('JR preload error', err));
+  }
+
+  function getCSSVar(name, fallback) {
+    const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    return v ? Number(v.replace('px','')) : fallback;
+  }
+
+  function loadImageMeta(src) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve({ src, width: img.naturalWidth, height: img.naturalHeight });
+      img.onerror = reject;
+      img.src = src;
+    });
+  }
+</script>
+
+<section class="gallery-section">
+  {{/* Build absolute/relative paths once and serialize to JSON for JS */}}
+  {{- $base := "/uploads/homepage_photos" -}}
+  {{- $files := slice -}}
+  {{- range .Params.gallery_photos -}}
+    {{- $files = $files | append (printf "%s/%s" $base .) -}}
+  {{- end -}}
+
+  <div
+    id="justified-rows"
+    class="jr-gallery"
+    data-files='{{ $files | jsonify }}'
+    data-gap="8"          {{/* optional override of --jr-gap in px */}}
+    data-row="260"        {{/* optional override of --jr-row in px */}}
+    aria-live="polite">
+  </div>
+
+  {{/* Optional: a <noscript> fallback (simple grid) */}}
+  <noscript>
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;">
+      {{- range $files -}}
+        <a href="{{ . }}" target="_blank" rel="noopener">
+          <img src="{{ . }}" alt="Gallery image" style="width:100%;height:auto;border-radius:12px;">
+        </a>
+      {{- end -}}
+    </div>
+  </noscript>
+</section>
 
 
   <!-- Section 5: Testimonials Carousel -->
