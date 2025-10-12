@@ -1,0 +1,136 @@
+{{ define "main" }}
+<!-- Page Title -->
+<div class="page-title-responsive">
+  <h1>{{ .Title }}</h1>
+</div>
+
+<!-- Subtitle -->
+{{- if .Params.subtitle -}}
+<div class="activities-subtitle">
+  <p>{{ .Params.subtitle }}</p>
+</div>
+{{- end -}}
+
+<!-- Activities Grid -->
+<div class="activities-grid">
+  {{- range .Params.activities -}}
+  <div class="activity-card">
+    <div class="activity-image-container">
+      <img src="{{ .image }}" alt="{{ .title }}" class="activity-image">
+    </div>
+    <h3 class="activity-title">{{ .title }}</h3>
+    <p class="activity-description">{{ .description }}</p>
+  </div>
+  {{- end -}}
+</div>
+
+<style>
+  /* Subtitle styling */
+  .activities-subtitle {
+    text-align: left;
+    max-width: 1200px;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+  }
+
+  .activities-subtitle p {
+    font-size: 18px;
+    color: #555;
+    line-height: 1.6;
+  }
+
+  /* Activities Grid */
+  .activities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 40px 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px 60px;
+  }
+
+  /* Activity Card */
+  .activity-card {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Circular Image Container */
+  .activity-image-container {
+    width: 180px;
+    height: 180px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .activity-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Activity Title */
+  .activity-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: #000;
+    margin: 0 0 12px 0;
+  }
+
+  /* Activity Description */
+  .activity-description {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Responsive breakpoints */
+  @media (max-width: 549px) {
+    .activities-grid {
+      grid-template-columns: 1fr;
+      gap: 35px;
+      padding-bottom: 40px;
+    }
+
+    .activity-image-container {
+      width: 150px;
+      height: 150px;
+    }
+
+    .activity-title {
+      font-size: 20px;
+    }
+
+    .activity-description {
+      font-size: 15px;
+    }
+
+    .activities-subtitle p {
+      font-size: 16px;
+    }
+  }
+
+  @media (min-width: 550px) and (max-width: 899px) {
+    .activities-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 900px) {
+    .activities-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .activities-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>
+{{ end }}

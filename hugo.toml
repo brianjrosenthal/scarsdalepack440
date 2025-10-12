@@ -19,6 +19,10 @@ title = "Scarsdale Pack 440"
     url = "/calendar/"
     weight = 3
   [[menu.main]]
+    name = "Activities"
+    url = "/activities/"
+    weight = 4
+  [[menu.main]]
     name = "Camping"
     url = "/camping/"
     weight = 5
@@ -42,4 +46,3 @@ title = "Scarsdale Pack 440"
     name = "Contact"
     url = "/contact/"
     weight = 10
-
