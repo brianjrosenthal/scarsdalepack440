@@ -1,0 +1,24 @@
+<?php
+// Fill these with your GitHub OAuth App values:
+const GITHUB_CLIENT_ID = '';
+const GITHUB_CLIENT_SECRET = '';
+
+// Must exactly match the callback URL registered in the GitHub OAuth App
+const REDIRECT_URI = 'https://auth.scarsdalepack440.org/callback.php';
+
+// Only allow your site’s admin origin to read token JSON
+const ALLOWED_ORIGIN = 'https://www.scarsdalepack440.org';
+
+const ALLOWED_ORIGINS = [
+  'https://www.scarsdalepack440.org',
+  'https://scarsdalepack440.org',
+  'http://localhost:1313',  // Hugo local preview
+  'http://localhost:8080',  // other local dev
+  'http://localhost:8000'   // other local dev
+];
+
+// Optional: tighten session settings
+ini_set('session.cookie_httponly', '1');
+ini_set('session.cookie_secure', '1');   // ensure HTTPS is enabled
+ini_set('session.use_strict_mode', '1');
+
