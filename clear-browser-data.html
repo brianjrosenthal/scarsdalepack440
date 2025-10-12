@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clear Browser Data - Decap CMS Auth Troubleshooting</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    
+    .container {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      max-width: 600px;
+      width: 100%;
+      padding: 40px;
+    }
+    
+    h1 {
+      color: #333;
+      margin-bottom: 10px;
+      font-size: 28px;
+    }
+    
+    .subtitle {
+      color: #666;
+      margin-bottom: 30px;
+      font-size: 14px;
+    }
+    
+    .section {
+      margin-bottom: 25px;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      border-left: 4px solid #667eea;
+    }
+    
+    .section h2 {
+      color: #444;
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+    
+    .section p {
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+    
+    .section ul {
+      margin-left: 20px;
+      color: #666;
+    }
+    
+    .section li {
+      margin: 8px 0;
+      line-height: 1.5;
+    }
+    
+    button {
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    
+    button:hover {
+      background: #5568d3;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+    
+    button:active {
+      transform: translateY(0);
+    }
+    
+    button.secondary {
+      background: #48bb78;
+    }
+    
+    button.secondary:hover {
+      background: #38a169;
+    }
+    
+    button.tertiary {
+      background: #ed8936;
+    }
+    
+    button.tertiary:hover {
+      background: #dd6b20;
+    }
+    
+    .status {
+      padding: 15px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      display: none;
+    }
+    
+    .status.success {
+      background: #c6f6d5;
+      border: 1px solid #48bb78;
+      color: #22543d;
+    }
+    
+    .status.info {
+      background: #bee3f8;
+      border: 1px solid #3182ce;
+      color: #2c5282;
+    }
+    
+    .status.show {
+      display: block;
+    }
+    
+    .code {
+      background: #2d3748;
+      color: #68d391;
+      padding: 12px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      margin-top: 10px;
+      overflow-x: auto;
+    }
+    
+    .warning {
+      background: #fef5e7;
+      border: 1px solid #f39c12;
+      color: #7d6608;
+      padding: 15px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔧 Clear Browser Data</h1>
+    <p class="subtitle">Decap CMS Authentication Troubleshooting Utility</p>
+    
+    <div id="status" class="status"></div>
+    
+    <div class="section">
+      <h2>Step 1: Clear Local Storage & Session Data</h2>
+      <p>This will clear all localStorage and sessionStorage for the current domain:</p>
+      <button onclick="clearLocalData()">Clear Storage Data</button>
+    </div>
+    
+    <div class="section">
+      <h2>Step 2: Clear Cookies (Manual)</h2>
+      <p>Due to browser security, cookies must be cleared manually. Here's how:</p>
+      <ul>
+        <li><strong>Chrome/Edge:</strong> Press F12 → Application tab → Cookies → Delete all for localhost:1313 and auth.scarsdalepack440.org</li>
+        <li><strong>Firefox:</strong> Press F12 → Storage tab → Cookies → Delete all</li>
+        <li><strong>Safari:</strong> Develop menu → Show Web Inspector → Storage → Cookies → Delete all</li>
+      </ul>
+      <p><strong>Or simply:</strong> Use an Incognito/Private window for testing (recommended!)</p>
+    </div>
+    
+    <div class="section">
+      <h2>Step 3: Test Authentication</h2>
+      <p>After clearing data, test the Decap CMS login:</p>
+      <button class="secondary" onclick="window.open('http://localhost:1313/admin/', '_blank')">Open Decap CMS Admin</button>
+      <p style="margin-top: 15px; font-size: 13px; color: #666;">
+        <strong>Expected behavior:</strong> Click "Login with GitHub" → Popup opens → GitHub login → Popup closes → You're logged in!
+      </p>
+    </div>
+    
+    <div class="section">
+      <h2>Advanced: Open Debugging Console</h2>
+      <p>If authentication still fails, open the browser console to see detailed error messages:</p>
+      <button class="tertiary" onclick="openWithConsole()">Open Admin with Console Instructions</button>
+    </div>
+    
+    <div class="warning">
+      <strong>💡 Pro Tip:</strong> The easiest way to test is to use an Incognito/Private window. This automatically starts with clean storage and cookies.
+    </div>
+  </div>
+
+  <script>
+    function showStatus(message, type = 'success') {
+      const status = document.getElementById('status');
+      status.textContent = message;
+      status.className = `status ${type} show`;
+      
+      setTimeout(() => {
+        status.classList.remove('show');
+      }, 5000);
+    }
+    
+    function clearLocalData() {
+      try {
+        // Clear localStorage
+        const localStorageCount = localStorage.length;
+        localStorage.clear();
+        
+        // Clear sessionStorage
+        const sessionStorageCount = sessionStorage.length;
+        sessionStorage.clear();
+        
+        // Try to clear indexedDB
+        if (window.indexedDB && window.indexedDB.databases) {
+          window.indexedDB.databases().then(databases => {
+            databases.forEach(db => {
+              window.indexedDB.deleteDatabase(db.name);
+            });
+          });
+        }
+        
+        showStatus(
+          `✅ Cleared ${localStorageCount} localStorage items and ${sessionStorageCount} sessionStorage items. ` +
+          `Now manually clear cookies or use an incognito window!`,
+          'success'
+        );
+      } catch (error) {
+        showStatus(`❌ Error clearing storage: ${error.message}`, 'info');
+      }
+    }
+    
+    function openWithConsole() {
+      alert(
+        'Opening admin panel...\n\n' +
+        'To see detailed errors:\n' +
+        '1. Press F12 to open Developer Tools\n' +
+        '2. Go to the Console tab\n' +
+        '3. Click "Login with GitHub"\n' +
+        '4. Watch for any error messages\n\n' +
+        'Common errors to look for:\n' +
+        '• CORS errors\n' +
+        '• "Origin not allowed"\n' +
+        '• Session/cookie issues\n' +
+        '• Network failures'
+      );
+      window.open('http://localhost:1313/admin/', '_blank');
+    }
+    
+    // Auto-clear on page load (optional)
+    window.addEventListener('load', () => {
+      showStatus(
+        '📋 Page loaded. Click the button above to clear browser storage, then test authentication.',
+        'info'
+      );
+    });
+  </script>
+</body>
+</html>
