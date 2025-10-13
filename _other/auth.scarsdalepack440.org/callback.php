@@ -86,66 +86,138 @@ if ($raw === false || $status !== 200) {
 // ---- Render small HTML page: post token back or show error ----
 ?>
 <!doctype html>
-<meta charset="utf-8">
-<title>Authentication</title>
-<body style="font:14px system-ui, -apple-system, Segoe UI, Roboto, sans-serif; padding:16px;">
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Authentication</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      padding: 20px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    h1 { color: #333; font-size: 20px; }
+    .success { color: #22543d; background: #c6f6d5; padding: 15px; border-radius: 4px; margin: 10px 0; }
+    .error { color: #a00; background: #fee; padding: 15px; border-radius: 4px; margin: 10px 0; }
+    .debug { background: #f5f5f5; padding: 15px; border-radius: 4px; margin: 10px 0; }
+    pre { white-space: pre-wrap; word-wrap: break-word; }
+    button { background: #667eea; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; margin: 10px 5px 0 0; }
+    button:hover { background: #5568d3; }
+  </style>
+</head>
+<body>
+  <h1>🔐 OAuth Authentication Debug</h1>
   <div id="msg">Completing sign-in…</div>
-  <pre id="err" style="color:#a00; white-space:pre-wrap;"></pre>
+  <div id="debug" class="debug"></div>
+  <pre id="err"></pre>
+  <button id="close-btn" style="display:none" onclick="window.close()">Close Window</button>
+  <button id="retry-btn" style="display:none" onclick="retryPostMessage()">Retry Send Token</button>
 </body>
 
 <script>
 (function () {
-  const msgEl = document.getElementById('msg') || { textContent: '' };
-  const errEl = document.getElementById('err') || { textContent: '' };
-
+  const msgEl = document.getElementById('msg');
+  const errEl = document.getElementById('err');
+  const debugEl = document.getElementById('debug');
+  const closeBtn = document.getElementById('close-btn');
+  const retryBtn = document.getElementById('retry-btn');
+  
+  let debugInfo = [];
+  
+  function addDebug(msg) {
+    debugInfo.push(msg);
+    debugEl.innerHTML = '<strong>Debug Info:</strong><br>' + debugInfo.join('<br>');
+    console.log('DEBUG:', msg);
+  }
+  
   // Use the stored origin from PHP session (set during authorize.php)
   const storedOrigin = <?php echo json_encode($stored_origin); ?>;
-  
-  // ALLOWED_ORIGINS is rendered by PHP
   const allowed = <?php echo json_encode(ALLOWED_ORIGINS); ?>;
-  const openerOrigin = storedOrigin;
+  const tokenPayload = <?php echo json_encode($token_json, JSON_UNESCAPED_SLASHES); ?>;
+  const tokenError = <?php echo json_encode($token_err); ?>;
+  
+  addDebug('Stored origin from session: ' + (storedOrigin || 'NULL'));
+  addDebug('Allowed origins: ' + allowed.join(', '));
+  addDebug('Has window.opener: ' + !!window.opener);
+  addDebug('Has token payload: ' + !!tokenPayload);
+  addDebug('Token error: ' + (tokenError || 'none'));
 
   <?php if (!empty($token_err)) { ?>
-    msgEl.textContent = 'Token exchange error.';
-    errEl.textContent = <?php echo json_encode($token_err); ?>;
-    console.error('OAuth error:', errEl.textContent);
+    msgEl.className = 'error';
+    msgEl.textContent = '❌ Token exchange error';
+    errEl.textContent = tokenError;
+    addDebug('ERROR: Token exchange failed');
     return;
   <?php } ?>
 
   if (!window.opener) {
-    msgEl.textContent = 'Authentication complete, but no opener window found.';
-    errEl.textContent = 'Did you open login from /admin as a popup?';
-    console.error(errEl.textContent);
+    msgEl.className = 'error';
+    msgEl.textContent = '❌ No opener window found';
+    errEl.textContent = 'The popup was not opened from the CMS admin page, or the opener was closed.';
+    addDebug('ERROR: No window.opener');
     return;
   }
 
-  if (!openerOrigin) {
-    msgEl.textContent = 'Could not determine opener origin.';
-    errEl.textContent = 'document.referrer was empty or invalid.';
-    console.error(errEl.textContent);
+  if (!storedOrigin) {
+    msgEl.className = 'error';
+    msgEl.textContent = '❌ Could not determine opener origin';
+    errEl.textContent = 'The origin was not stored in the session. This might be a session issue.';
+    addDebug('ERROR: No stored origin in session');
     return;
   }
 
-  if (allowed.indexOf(openerOrigin) === -1) {
-    msgEl.textContent = 'Origin not allowed: ' + openerOrigin;
-    errEl.textContent = 'Allowed: ' + allowed.join(', ');
-    console.error(msgEl.textContent, { allowed });
+  if (allowed.indexOf(storedOrigin) === -1) {
+    msgEl.className = 'error';
+    msgEl.textContent = '❌ Origin not allowed: ' + storedOrigin;
+    errEl.textContent = 'Allowed origins: ' + allowed.join(', ');
+    addDebug('ERROR: Origin not in allowed list');
     return;
   }
 
-  try {
-    // Decap expects this exact message format
-    const payload = <?php echo json_encode($token_json, JSON_UNESCAPED_SLASHES); ?>;
-    window.opener.postMessage(
-      'authorization:github:success:' + JSON.stringify(payload),
-      openerOrigin
-    );
-    msgEl.textContent = 'Signed in. You can close this window.';
-    window.close();
-  } catch (e) {
-    msgEl.textContent = 'postMessage failed.';
-    errEl.textContent = (e && e.message) ? e.message : String(e);
-    console.error('postMessage error:', e);
-  }
+  // Implement Decap CMS handshake protocol
+  addDebug('Setting up handshake with Decap CMS...');
+  
+  const receiveMessage = function(event) {
+    addDebug('Received message from opener: ' + event.data);
+    
+    // Decap CMS is ready when it responds to our "authorizing" message
+    if (event.data === 'authorizing:github:ready' || event.origin === storedOrigin) {
+      addDebug('Decap CMS is ready! Sending token...');
+      
+      try {
+        const message = 'authorization:github:success:' + JSON.stringify(tokenPayload);
+        window.opener.postMessage(message, storedOrigin);
+        
+        msgEl.className = 'success';
+        msgEl.textContent = '✅ Authentication successful!';
+        addDebug('SUCCESS: Token sent to Decap CMS');
+        addDebug('You can close this window or it will auto-close');
+        
+        window.removeEventListener('message', receiveMessage, false);
+        
+        // Auto-close after 3 seconds
+        setTimeout(() => {
+          addDebug('Closing window...');
+          window.close();
+        }, 3000);
+        
+      } catch (e) {
+        msgEl.className = 'error';
+        msgEl.textContent = '❌ Failed to send token';
+        errEl.textContent = (e && e.message) ? e.message : String(e);
+        addDebug('ERROR: ' + e.message);
+        closeBtn.style.display = 'inline-block';
+      }
+    }
+  };
+  
+  // Listen for ready signal from Decap CMS
+  window.addEventListener('message', receiveMessage, false);
+  
+  // Tell Decap CMS we're ready to authenticate
+  addDebug('Sending "authorizing:github" signal...');
+  window.opener.postMessage('authorizing:github', '*');
 })();
 </script>
+</html>

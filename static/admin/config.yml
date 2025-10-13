@@ -2,18 +2,168 @@ backend:
   name: github
   repo: brianjrosenthal/scarsdalepack440
   branch: master
-  base_url: https://auth.scarsdalepack440.org      # your OAuth proxy (section C)
+  base_url: https://auth.scarsdalepack440.org
   auth_endpoint: /authorize.php
-  cms_label_prefix: "[CMS]"                         # optional: prefix commit messages
+  cms_label_prefix: "[CMS]"
 
-media_folder: "static/uploads"      # where files are stored in the repo
-public_folder: "/uploads"           # how they’re referenced on the site
-
-# Use direct-publish to master for now (simple). Switch to editorial_workflow later if you want PR review.
+media_folder: "static/uploads"
+public_folder: "/uploads"
 publish_mode: simple
 
-# Collections define what editors can edit
 collections:
+  # Homepage
+  - name: "homepage"
+    label: "Homepage"
+    files:
+      - name: "home"
+        label: "Homepage Content"
+        file: "content/_index.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Hero Title (use <br> for line breaks)", name: "hero_title", widget: "string" }
+          - { label: "Intro Text 1", name: "intro_text_1", widget: "text" }
+          - { label: "Intro Text 2", name: "intro_text_2", widget: "text" }
+          - { label: "Activities Section Title", name: "activities_title", widget: "string" }
+          - { label: "Activities Section Subtitle", name: "activities_subtitle", widget: "string" }
+          - label: "Activities"
+            name: "activities"
+            widget: "list"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Image", name: "image", widget: "image" }
+          - label: "Testimonials"
+            name: "testimonials"
+            widget: "list"
+            fields:
+              - { label: "Quote", name: "quote", widget: "text" }
+              - { label: "Person", name: "person", widget: "string" }
+          - label: "Gallery Photos"
+            name: "gallery_photos"
+            widget: "list"
+            hint: "Add photo filenames from /uploads/homepage_photos/ folder"
+            field: { label: "Photo Filename", name: "photo", widget: "string" }
+
+  # Section Pages
+  - name: "activities"
+    label: "Activities Page"
+    files:
+      - name: "activities"
+        label: "Activities Content"
+        file: "content/activities/_index.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Subtitle", name: "subtitle", widget: "text" }
+          - label: "Activities List"
+            name: "activities"
+            widget: "list"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+              - { label: "Image", name: "image", widget: "image" }
+
+  - name: "join"
+    label: "Join Page"
+    files:
+      - name: "join"
+        label: "Join Content"
+        file: "content/join/_index.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - label: "Payment Methods"
+            name: "payment_methods"
+            widget: "list"
+            fields:
+              - { label: "Payment Type", name: "title", widget: "string" }
+              - label: "Instructions"
+                name: "items"
+                widget: "list"
+                field: { label: "Instruction", name: "item", widget: "string" }
+          - { label: "What's Included Text", name: "what_included_text", widget: "markdown" }
+          - { label: "Body Content", name: "body", widget: "markdown" }
+
+  - name: "calendar"
+    label: "Calendar Page"
+    files:
+      - name: "calendar"
+        label: "Calendar Content"
+        file: "content/calendar/_index.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "camping"
+    label: "Camping Page"
+    files:
+      - name: "camping"
+        label: "Camping Content"
+        file: "content/camping/_index.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "contact"
+    label: "Contact Page"
+    files:
+      - name: "contact"
+        label: "Contact Content"
+        file: "content/contact/_index.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "donate"
+    label: "Donate Page"
+    files:
+      - name: "donate"
+        label: "Donate Content"
+        file: "content/donate/_index.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "faq"
+    label: "FAQ Page"
+    files:
+      - name: "faq"
+        label: "FAQ Content"
+        file: "content/faq/_index.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "forms"
+    label: "Forms Page"
+    files:
+      - name: "forms"
+        label: "Forms Content"
+        file: "content/forms/_index.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "uniforms"
+    label: "Uniforms Page"
+    files:
+      - name: "uniforms"
+        label: "Uniforms Content"
+        file: "content/uniforms/_index.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Body", name: "body", widget: "markdown" }
+
+  # Blog Posts
+  - name: "posts"
+    label: "Blog Posts"
+    folder: "content/posts"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Draft", name: "draft", widget: "boolean", default: false }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  # General Pages
   - name: "pages"
     label: "Pages"
     folder: "content/pages"
@@ -22,38 +172,3 @@ collections:
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Body", name: "body", widget: "markdown" }
-
-  # Expose homepage too (optional)
-  - name: "homepage"
-    label: "Homepage"
-    files:
-      - name: "home"
-        label: "Home Content"
-        file: "content/_index.md"
-        fields:
-          - { label: "Title", name: "title", widget: "string" }
-          - { label: "Body", name: "body", widget: "markdown" }
-
-  # If you adopt the data/menus.yml pattern later, you can add a GUI here
-  # - name: "navigation"
-  #   label: "Navigation"
-  #   files:
-  #     - name: "menus"
-  #       label: "Main Menu"
-  #       file: "data/menus.yml"
-  #       fields:
-  #         - label: "Main"
-  #           name: "main"
-  #           widget: "list"
-  #           fields:
-  #             - { label: "Name", name: "name", widget: "string" }
-  #             - { label: "URL", name: "url", widget: "string" }
-  #             - { label: "Weight", name: "weight", widget: "number", value_type: "int" }
-  #             - label: "Children"
-  #               name: "children"
-  #               widget: "list"
-  #               fields:
-  #                 - { label: "Name", name: "name", widget: "string" }
-  #                 - { label: "URL", name: "url", widget: "string" }
-  #                 - { label: "Weight", name: "weight", widget: "number", value_type: "int" }
-
