@@ -11,6 +11,7 @@
     </a>
 
     <nav class="nav" aria-label="Main">
+      <a href="https://my.scarsdalepack440.org" class="member-portal-btn" target="_blank" rel="noopener noreferrer">Member Portal</a>
       <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
         <span>☰</span>
       </button>
@@ -23,7 +24,8 @@
           {{- if ne $menuURL "/" -}}
             {{- $isActive = or (eq $currentURL $menuURL) (hasPrefix $currentURL (printf "%s/" (strings.TrimSuffix "/" $menuURL))) -}}
           {{- end -}}
-          <li class="menu-item {{ if .HasChildren }}has-children{{ end }} {{ if $isActive }}is-active{{ end }}">
+          {{- $hideOnMobile := eq .Name "Home" -}}
+          <li class="menu-item {{ if .HasChildren }}has-children{{ end }} {{ if $isActive }}is-active{{ end }} {{ if $hideOnMobile }}hide-on-mobile{{ end }}">
             <a href="{{ .URL | relURL }}">{{ .Name }}</a>
             {{- if .HasChildren -}}
               <ul class="submenu">
@@ -37,6 +39,11 @@
               </ul>
             {{- end -}}
           </li>
+          {{- if eq .Name "Calendar" -}}
+            <li class="menu-item mobile-only">
+              <a href="https://my.scarsdalepack440.org" target="_blank" rel="noopener noreferrer">Member Portal</a>
+            </li>
+          {{- end -}}
         {{- end -}}
       </ul>
     </nav>
