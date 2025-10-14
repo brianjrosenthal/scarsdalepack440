@@ -11,40 +11,53 @@
     </a>
 
     <nav class="nav" aria-label="Main">
-      <a href="https://my.scarsdalepack440.org" class="member-portal-btn" target="_blank" rel="noopener noreferrer">Member Portal</a>
+      <div class="top-menu">
+        <a href="https://my.scarsdalepack440.org" class="top-menu-link" target="_blank" rel="noopener noreferrer">Member Portal</a>
+        <a href="/contact/" class="top-menu-link">Contact Us</a>
+      </div>
       <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
         <span>☰</span>
       </button>
       <ul class="menu" id="main-menu">
         {{- $currentPage := . -}}
         {{- $currentURL := $currentPage.RelPermalink -}}
+        {{- if ne $currentURL "/" -}}
+          <li class="menu-item hide-on-mobile">
+            <a href="/">Home</a>
+          </li>
+        {{- end -}}
         {{- range site.Menus.main -}}
           {{- $menuURL := .URL | relURL -}}
           {{- $isActive := false -}}
           {{- if ne $menuURL "/" -}}
             {{- $isActive = or (eq $currentURL $menuURL) (hasPrefix $currentURL (printf "%s/" (strings.TrimSuffix "/" $menuURL))) -}}
           {{- end -}}
-          {{- $hideOnMobile := eq .Name "Home" -}}
-          <li class="menu-item {{ if .HasChildren }}has-children{{ end }} {{ if $isActive }}is-active{{ end }} {{ if $hideOnMobile }}hide-on-mobile{{ end }}">
-            <a href="{{ .URL | relURL }}">{{ .Name }}</a>
-            {{- if .HasChildren -}}
-              <ul class="submenu">
-                {{- range .Children -}}
-                  {{- $childURL := .URL | relURL -}}
-                  {{- $childIsActive := eq $currentURL $childURL -}}
-                  <li class="submenu-item {{ if $childIsActive }}is-active{{ end }}">
-                    <a href="{{ .URL | relURL }}">{{ .Name }}</a>
-                  </li>
-                {{- end -}}
-              </ul>
-            {{- end -}}
-          </li>
-          {{- if eq .Name "Calendar" -}}
+          {{- $hideFromMenu := or (eq .Name "Contact") (eq .Name "Home") -}}
+          {{- if not $hideFromMenu -}}
+            <li class="menu-item {{ if .HasChildren }}has-children{{ end }} {{ if $isActive }}is-active{{ end }}">
+              <a href="{{ .URL | relURL }}">{{ .Name }}</a>
+              {{- if .HasChildren -}}
+                <ul class="submenu">
+                  {{- range .Children -}}
+                    {{- $childURL := .URL | relURL -}}
+                    {{- $childIsActive := eq $currentURL $childURL -}}
+                    <li class="submenu-item {{ if $childIsActive }}is-active{{ end }}">
+                      <a href="{{ .URL | relURL }}">{{ .Name }}</a>
+                    </li>
+                  {{- end -}}
+                </ul>
+              {{- end -}}
+            </li>
+          {{- end -}}
+          {{- if eq .Name "Join" -}}
             <li class="menu-item mobile-only">
               <a href="https://my.scarsdalepack440.org" target="_blank" rel="noopener noreferrer">Member Portal</a>
             </li>
           {{- end -}}
         {{- end -}}
+        <li class="menu-item mobile-only">
+          <a href="/contact/">Contact Us</a>
+        </li>
       </ul>
     </nav>
   </div>

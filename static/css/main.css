@@ -27,31 +27,30 @@ a:hover{text-decoration:underline}
 .menu-item.is-active>a{background:rgba(255,255,255,.16);font-weight:700}
 .menu-item.has-children{position:relative}
 
-/* Member Portal Button - Desktop */
-.member-portal-btn{
-  display:inline-block;
+/* Top Menu (Login, Contact Us) - Desktop */
+.top-menu{
+  display:flex;
+  gap:16px;
   position:absolute;
   top:-25px;
-  right:0;
-  background:#fff;
-  color:var(--green);
-  padding:5px 10px;
-  border-radius:6px;
-  font-weight:700;
-  font-size:14px;
-  text-decoration:none;
-  box-shadow:0 2px 4px rgba(0,0,0,.15);
-  transition:all 0.2s ease;
+  right:8px;
 }
-.member-portal-btn:hover{
-  background:#f5f5f5;
-  transform:translateY(-1px);
-  box-shadow:0 4px 8px rgba(0,0,0,.2);
+.top-menu-link{
+  color:#fff;
+  padding:8px 0;
+  font-weight:400;
+  font-size:16px;
   text-decoration:none;
+}
+.top-menu-link:hover{
+  text-decoration:underline;
 }
 
 /* Hide mobile-only menu items on desktop */
 .menu-item.mobile-only{display:none;}
+
+/* Hide certain menu items on mobile */
+.menu-item.hide-on-mobile{display:flex;}
 .submenu{
   list-style:none;margin:0;padding:8px 0;position:absolute;left:0;top:100%;
   min-width:200px;background:#fff;color:var(--text);border:1px solid #e6e6e6;border-radius:10px;
@@ -76,13 +75,13 @@ a:hover{text-decoration:underline}
 
 /* Mobile screens */
 @media (max-width: 549px){
-  /* Hide desktop Member Portal button on mobile */
-  .member-portal-btn{display:none;}
+  /* Hide desktop top menu on mobile */
+  .top-menu{display:none;}
   
   /* Show mobile-only menu items */
   .menu-item.mobile-only{display:block;}
   
-  /* Hide Home link on mobile */
+  /* Hide items marked as hide-on-mobile */
   .menu-item.hide-on-mobile{display:none;}
   
   /* Reset nav positioning for mobile */
