@@ -39,4 +39,4 @@ what_included_text: |
 
 1. Use this fillable [PDF Youth Application form](https://filestore.scouting.org/filestore/pdf/524-406.pdf), fill it out, print it out, sign it and give it to Takford Mau or one of the other pack leaders.
 
-2. Also please pay the dues, which are $450 per Scout for the 2025-2026 academic year. Siblings get a $250 discount (so siblings are an additional $200).
+2. Also please pay the dues, which are $350 per Scout for the 2025-2026 academic year. Siblings get a $150 discount (so siblings are an additional $200).

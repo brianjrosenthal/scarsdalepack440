@@ -3,7 +3,7 @@ title: "Donate to Pack 440!"
 intro_text: |
   **Thank you for considering a donation to Cub Scout Pack 440!**
   
-  **Donations to Pack 440 go directly into our operations** and this year in particular, we have a goal of lowering dues next year to $250 / scout instead of $450 per scout, which requires a significant amount of fundraising.
+  **Donations to Pack 440 go directly into our operations** and this year in particular, we have a goal of lowering dues next year to $250 / scout instead of $350 per scout, which requires a significant amount of fundraising.
   
   **Our Tax ID is 13-2750608 ("The Greater Hudson Valley Council")**, and donations are tax deductable as any 501-C3 non-profit. Please email Takford Mau (takfordmau@gmail.com) to give him a heads-up that you donated and he will send you a donation letter.
   

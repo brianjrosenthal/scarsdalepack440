@@ -11,7 +11,7 @@ faqs:
     answer: "Parent volunteers! We need the help of ALL parents and guardians to truly make Scouting a rewarding experience for our Cubs. Our leaders are vetted, trained and dedicated. Please see our contact page for more specific leader information and please let us know of any skills or talents you can share with our Pack!"
   
   - question: "What does it cost?"
-    answer: "Pack dues will be $450 for the 2025-26 school year. In addition, each Cub needs a uniform. There are some events that aren't covered with that (ski trip, basketball game, fishing trip, etc.), but many are."
+    answer: "Pack dues will be $350 for the 2026-27 school year. In addition, each Cub needs a uniform. There are some events that aren't covered with that (ski trip, basketball game, fishing trip, etc.), but many are."
   
   - question: "Who can join?"
     answer: "Pack 440 is open to all children in grades Kindergarten through 5th Grade. Pack 440 is nondenominational."
